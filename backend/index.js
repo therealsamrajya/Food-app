@@ -24,14 +24,26 @@ mongoose
   });
 
 // CORS configuration
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://food-app-lovat-six.vercel.app",
+  "https://food-app-bznp.vercel.app",
+];
+
 const corsOptions = {
-  origin: "http://localhost:5173", // frontend URL
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true, // allow credentials
 };
+
 app.use(cors(corsOptions));
 
 app.use("/api/food", foodItemsRoute);
-
 app.use("/api/users", userRouter);
 
 app.get("/", (req, res) => {
