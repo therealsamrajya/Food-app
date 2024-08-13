@@ -9,7 +9,7 @@ const CategorySection = ({ category }) => {
     const fetchFoodItems = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/api/food/category/${category}`
+          `${import.meta.env.VITE_BACKEND_URL}/food/category/${category}`
         );
         setFoodItems(response.data.data);
       } catch (error) {

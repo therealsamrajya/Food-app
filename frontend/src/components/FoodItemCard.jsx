@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useInView } from "react-intersection-observer";
-import useCartStore from "./cartStore"; // Assuming you have a zustand store setup
-import Button from "./Button";
+import useCartStore from "./cartStore";
 
 const FoodItemCard = ({ _id, name, description, price, image, special }) => {
   const { ref, inView } = useInView({

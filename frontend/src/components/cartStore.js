@@ -34,7 +34,7 @@ const useCartStore = create((set) => ({
       }));
 
       await axios.post(
-        "http://localhost:4000/api/users/cart/save",
+        `${import.meta.env.VITE_BACKEND_URL}/users/cart/save`,
         { cart: cartData },
         {
           headers: {
