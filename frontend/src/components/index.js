@@ -13,6 +13,7 @@ import SignupForm from "./SignupForm";
 import ToastNotification from "./ToastNotification";
 import { AuthProvider, AuthContext } from "./AuthProvider";
 import Cart from "./Cart";
+import useCartStore from "./cartStore";
 
 export {
   Navbar,
@@ -31,4 +32,5 @@ export {
   AuthProvider,
   AuthContext,
   Cart,
+  useCartStore,
 };

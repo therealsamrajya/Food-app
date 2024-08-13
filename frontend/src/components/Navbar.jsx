@@ -1,14 +1,20 @@
 import React, { useContext } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import Button from "./Button";
-import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaTwitter,
+  FaInstagram,
+  FaShoppingCart,
+} from "react-icons/fa";
 import ImageGallery from "./ImageGallery";
 import { AuthContext } from "./AuthProvider";
-import { FaShoppingCart } from "react-icons/fa";
+import useCartStore from "./cartStore"; // Import your cart store
 
 const Navbar = () => {
   const location = useLocation();
   const { isAuthenticated, logout } = useContext(AuthContext);
+  const cartItemCount = useCartStore((state) => state.cartItems.length); // Get cart item count
 
   const handleLogout = async () => {
     await logout();
@@ -39,14 +45,19 @@ const Navbar = () => {
 
         <div className="absolute flex flex-row gap-[3rem] top-3 right-0 mt-4 mr-4">
           <NavLink
-            className="font-secondary text-heading hover:text-slate-300 hover:underline underline-offset-4"
+            className="font-secondary text-heading hover:text-slate-300 hover:underline underline-offset-4 relative"
             to="/CartPage">
             <FaShoppingCart className=" h-[3rem] w-[2rem] text-heading hover:text-slate-300 hover:underline underline-offset-4" />
+            {cartItemCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-6 w-6 flex items-center justify-center">
+                {cartItemCount}
+              </span>
+            )}
           </NavLink>
           {isAuthenticated ? (
             <button
               onClick={handleLogout}
-              className="border-white border-[1px] text-heading bg-transparent h-[3srem] text-[1.5rem] font-semibold uppercase w-[7rem] hover:bg-heading hover:text-dark max-sm:w-[8rem] max-sm:h-[2rem] font-button">
+              className="border-white border-[1px] text-heading bg-transparent h-[3rem] text-[1.5rem] font-semibold uppercase w-[7rem] hover:bg-heading hover:text-dark max-sm:w-[8rem] max-sm:h-[2rem] font-button">
               Logout
             </button>
           ) : (
@@ -136,4 +147,5 @@ const Navbar = () => {
     </div>
   );
 };
+
 export default Navbar;

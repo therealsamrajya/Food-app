@@ -18,7 +18,7 @@ const Special = () => {
       try {
         const responses = await Promise.all(
           specialItemIds.map((id) =>
-            axios.get(`http://localhost:4000/api/food/${id}`)
+            axios.get(`${import.meta.env.VITE_BACKEND_URL}/food/${id}`)
           )
         );
         setSpecialItems(responses.map((response) => response.data.data));

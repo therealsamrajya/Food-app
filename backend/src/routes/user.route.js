@@ -5,10 +5,8 @@ import {
   logoutUser,
   refreshAccessToken,
   resetPassword,
-  getUserCart,
-  addToCart,
-  removeFromCart,
   checkAuth,
+  saveCart,
 } from "../controllers/user.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 const router = Router();
@@ -25,11 +23,7 @@ router.route("/refresh-token").post(refreshAccessToken);
 
 router.route("/reset-password").post(resetPassword);
 
-router.route("/cart/add").post(verifyJWT, addToCart);
-
-router.route("/cart/remove").delete(verifyJWT, removeFromCart);
-
-router.route("/cart").get(verifyJWT, getUserCart);
+router.post("/cart/save", verifyJWT, saveCart);
 
 router.route("/check-auth").get(verifyJWT, checkAuth);
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useInView } from "react-intersection-observer";
-import axios from "axios";
+import useCartStore from "./cartStore"; // Assuming you have a zustand store setup
 import Button from "./Button";
 
 const FoodItemCard = ({ _id, name, description, price, image, special }) => {
@@ -11,22 +11,20 @@ const FoodItemCard = ({ _id, name, description, price, image, special }) => {
 
   const [message, setMessage] = useState(""); // State to hold success or error messages
 
-  const handleAddToCart = async () => {
+  // Get the addToCart function from your zustand store
+  const addToCart = useCartStore((state) => state.addToCart);
+
+  const handleAddToCart = () => {
     try {
-      const token = localStorage.getItem("accessToken");
-      const response = await axios.post(
-        "http://localhost:4000/api/users/cart/add",
-        { foodItemId: _id },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setMessage("Item added to cart successfully!"); // Set success message
+      console.log("Adding food item ID:", _id);
+
+      // Add the item to the cart locally
+      addToCart({ _id, name, image, description, price, quantity: 1 });
+
+      setMessage("Item added to cart successfully!");
     } catch (err) {
       console.error("Error adding item to cart", err);
-      setMessage("Failed to add item to cart."); // Set error message
+      setMessage("Failed to add item to cart.");
     }
   };
 
@@ -50,11 +48,11 @@ const FoodItemCard = ({ _id, name, description, price, image, special }) => {
         </p>
         <p className="text-lg font-semibold font-secondary mt-4">Rs {price}</p>
         {!special && (
-          <Button
+          <button
             onClick={handleAddToCart}
-            value="Add to Cart"
-            className="mt-8 text-heading font-button bg-button h-12 font-semibold uppercase w-fit py-2 hover:bg-red-500 whitespace-nowrap"
-          />
+            className="mt-8 text-heading font-button bg-button h-12 font-semibold uppercase w-fit py-2 hover:bg-red-500 whitespace-nowrap">
+            Add to Cart
+          </button>
         )}
         {message && (
           <p

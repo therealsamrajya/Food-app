@@ -14,7 +14,7 @@ const SignupForm = ({ onSwitch }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/users/register",
+        `${import.meta.env.VITE_BACKEND_URL}/users/register`,
         {
           username,
           email,
