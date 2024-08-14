@@ -24,20 +24,13 @@ mongoose
   });
 
 // CORS configuration
-const allowedOrigins = ["https://food-app-lovat-six.vercel.app"];
 
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true, // allow credentials
-};
-
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: "https://food-app-lovat-six.vercel.app",
+    credentials: true,
+  })
+);
 
 app.use("/api/food", foodItemsRoute);
 app.use("/api/users", userRouter);
