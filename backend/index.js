@@ -24,11 +24,7 @@ mongoose
   });
 
 // CORS configuration
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://food-app-lovat-six.vercel.app",
-  "https://food-app-bznp.vercel.app",
-];
+const allowedOrigins = ["https://food-app-lovat-six.vercel.app"];
 
 const corsOptions = {
   origin: function (origin, callback) {
